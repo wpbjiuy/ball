@@ -16,6 +16,11 @@
 		body{
 			background-color:#222;
 		}
+		#ball{
+			width:100%;
+			height:100%;
+			transform:scale(0.8);
+		}
 		.ball{
 			position: absolute;
 			width:200px;
@@ -70,29 +75,31 @@
 		}
 
 		@keyframes rotateX0{
-			0%{transform:perspective(800px) rotateX(-20deg) rotateY(0deg);}
-			100%{transform:perspective(800px) rotateX(-20deg) rotateY(360deg);}
+			0%{transform:perspective(1800px) rotateX(0deg) rotateY(0deg);}
+			100%{transform:perspective(1800px) rotateX(360deg) rotateY(360deg);}
 		}
 
 		@keyframes rotateX1{
-			0%{transform:perspective(800px) rotateX(-20deg) rotateY(0deg) translateZ(400px);z-index: 9;top:20%;}
-			30%{transform:perspective(800px) rotateX(-20deg) rotateY(108deg) translateZ(400px);z-index: 9;top:30%;}
-			70%{transform:perspective(800px) rotateX(-20deg) rotateY(252deg) translateZ(400px);z-index: 1;top:30%;}
-			80%{transform:perspective(800px) rotateX(-20deg) rotateY(288deg) translateZ(400px);z-index: 9;top:25%;}
-			100%{transform:perspective(800px) rotateX(-20deg) rotateY(360deg) translateZ(400px);z-index: 9;top:20%;}
+			0%{transform:perspective(1800px) rotateX(-20deg) rotateY(0deg) translateZ(400px);z-index: 9;top:20%;}
+			30%{transform:perspective(1800px) rotateX(-20deg) rotateY(108deg) translateZ(400px);z-index: 9;top:30%;}
+			70%{transform:perspective(1800px) rotateX(-20deg) rotateY(252deg) translateZ(400px);z-index: 1;top:30%;}
+			80%{transform:perspective(1800px) rotateX(-20deg) rotateY(288deg) translateZ(400px);z-index: 9;top:25%;}
+			100%{transform:perspective(1800px) rotateX(-20deg) rotateY(360deg) translateZ(400px);z-index: 9;top:20%;}
 		}
 
 		@keyframes rotateX2{
-			0%{transform:perspective(800px) rotateX(-20deg) rotateY(0deg) translateZ(600px);z-index: 9;top:10%;}
-			30%{transform:perspective(800px) rotateX(-20deg) rotateY(108deg) translateZ(600px);z-index: 9;top:40%;}
-			50%{transform:perspective(800px) rotateX(-20deg) rotateY(180deg) translateZ(600px);z-index: 1;top:45%;}
-			70%{transform:perspective(800px) rotateX(-20deg) rotateY(252deg) translateZ(600px);z-index: 1;top:40%;}
-			80%{transform:perspective(800px) rotateX(-20deg) rotateY(288deg) translateZ(600px);z-index: 9;top:30%;}
-			100%{transform:perspective(800px) rotateX(-20deg) rotateY(360deg) translateZ(600px);z-index: 9;top:10%;}
+			0%{transform:perspective(1800px) rotateX(-20deg) rotateY(0deg) translateZ(600px);z-index: 9;top:10%;}
+			30%{transform:perspective(1800px) rotateX(-20deg) rotateY(108deg) translateZ(600px);z-index: 9;top:40%;}
+			50%{transform:perspective(1800px) rotateX(-20deg) rotateY(180deg) translateZ(600px);z-index: 1;top:45%;}
+			70%{transform:perspective(1800px) rotateX(-20deg) rotateY(252deg) translateZ(600px);z-index: 1;top:40%;}
+			80%{transform:perspective(1800px) rotateX(-20deg) rotateY(288deg) translateZ(600px);z-index: 9;top:30%;}
+			100%{transform:perspective(1800px) rotateX(-20deg) rotateY(360deg) translateZ(600px);z-index: 9;top:10%;}
 		}
 	</style>
 </head>
 <body>
+
+	<div id="ball"></div>
 
 	<script type="text/javascript">
 
@@ -110,12 +117,13 @@
 				ball.className = 'ball'+(obj.ballcss ? (' '+obj.ballcss):'');
 				ball.style.width = obj.w + 'px';
 				ball.style.height = obj.w + 'px';
-				ball.style.marginTop =  _w/3 + 'px';
+				// ball.style.marginTop =  -_w/3 + 'px';
 				ball.style.marginLeft = -_w/3 + 'px';
 				this.pnode.appendChild(ball);
 				
 				this.addHele(ball, obj.x||12, _w)
 				this.addIele(ball, obj.y||25, _w)
+				return ball;
 			}
 
 			addHele(ele, n, w){
@@ -151,9 +159,9 @@
 			}
 		}
 
-		const ball = new Ball()
+		const ball = new Ball(200, document.getElementById('ball'))
 
-		ball.createBall({
+		var b0 = ball.createBall({
 			w:400,
 			ballcss:'rotateX0'
 		})
@@ -172,7 +180,7 @@
 			ballcss:'rotateX2'
 		})
 
-		// box.onmousedown = mdown;
+		b0.onmousedown = mdown;
 		window.onmouseup = function(e){
 			ex = ax, ey = ay;
 			window.onmousemove = null;
@@ -187,7 +195,7 @@
 		function mov(e){
 			let x = ix - e.clientX, y = iy - e.clientY;
 			ax = ex + x, ay = ey + y;
-			box.style.transform = 'perspective(600px) rotateY('+-ax+'deg)  rotateX('+ay+'deg)';
+			b0.style.transform = 'perspective(600px) rotateY('+-ax+'deg)  rotateX('+ay+'deg)';
 
 		}
 	</script>

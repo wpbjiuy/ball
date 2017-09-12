@@ -20,6 +20,7 @@
 			width:100%;
 			height:100%;
 			transform:scale(0.8);
+			transform-style:preserve-3d;
 		}
 		.ball{
 			position: absolute;
@@ -138,13 +139,15 @@
 			}
 
 			addIele(ele, n, w){
-				let _r = w/2, sh = _r/(Math.floor(n/2));
+				let _r = w/2, sh = _r/(Math.floor(n/2)), rd = 90/Math.floor(n/2);
 
 				for(let i = 0, k = 0; i < n; i++){
 					let p = document.createElement('p');
 					let iso = i%2 == 0;
-					let r = Math.sqrt(Math.pow(_r,2) - Math.pow(Math.abs(k*sh),2)) * 2;
-					let h = (iso ? 1 : -1)*(k*sh) + (w-r)/2;
+					let _sh = Math.sin(rd*k*(2*Math.PI/360)) * _r;
+					// let _sh = k*sh;
+					let r = Math.sqrt(Math.pow(_r,2) - Math.pow(Math.abs(_sh),2)) * 2;
+					let h = (iso ? 1 : -1)*(_sh) + (w-r)/2;
 					
 					p.className = 'l t';
 					p.style.transform = 'rotateX(90deg)';
@@ -165,6 +168,8 @@
 			w:400,
 			ballcss:'rotateX0'
 		})
+
+		// var b0 = document.getElementById('ball')
 
 		ball.createBall({
 			w:100,
@@ -195,7 +200,7 @@
 		function mov(e){
 			let x = ix - e.clientX, y = iy - e.clientY;
 			ax = ex + x, ay = ey + y;
-			b0.style.transform = 'perspective(600px) rotateY('+-ax+'deg)  rotateX('+ay+'deg)';
+			b0.style.transform = 'perspective(800px) rotateY('+-ax+'deg)  rotateX('+ay+'deg)';
 
 		}
 	</script>
